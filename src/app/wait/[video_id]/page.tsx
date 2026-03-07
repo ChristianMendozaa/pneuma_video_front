@@ -47,24 +47,8 @@ export default function WaitScreen({ params }: { params: Promise<{ video_id: str
         return () => clearInterval(interval);
     }, [video_id]);
 
-    const handleDownload = async () => {
-        if (!statusResponse?.video_url) return;
-
-        try {
-            // Change button text temporarily if achievable, but easiest is just fetch and download
-            const response = await fetch(statusResponse.video_url);
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = `easymarket_video_${video_id}.mp4`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error("Error al descargar:", error);
-            // Fallback en caso de error de red o de permisos
+    const handleDownload = () => {
+        if (statusResponse?.video_url) {
             window.open(statusResponse.video_url, "_blank");
         }
     };

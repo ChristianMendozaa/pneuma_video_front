@@ -29,15 +29,8 @@ export default function GalleryPage() {
         return () => clearInterval(interval);
     }, []);
 
-    const handleDownload = (url: string, videoId: string) => {
-        const downloadUrl = `${process.env.NEXT_PUBLIC_VIDEO_API_URL}/download/${videoId}`;
-
-        const link = document.createElement("a");
-        link.href = downloadUrl;
-        link.target = "_blank";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+    const handleDownload = (url: string) => {
+        window.open(url, "_blank");
     };
 
     return (
@@ -93,7 +86,7 @@ export default function GalleryPage() {
                                     <button
                                         className="btn btn-primary"
                                         style={{ padding: '10px' }}
-                                        onClick={() => handleDownload(vid.final_url, vid.video_id)}
+                                        onClick={() => handleDownload(vid.final_url)}
                                     >
                                         Descargar
                                     </button>
