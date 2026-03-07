@@ -9,7 +9,7 @@ export default function Home() {
   const [formData, setFormData] = useState({
     product_name: "",
     product_description: "",
-    aspect_ratio: "16:9",
+    aspect_ratio: "9:16",
     video_style: "Auto",
     music_genre: "Pop Latino",
     custom_theme: "",
@@ -133,9 +133,21 @@ export default function Home() {
             <label>Subir Imágenes (Max 3)</label>
             <div className="file-upload-area">
               <input type="file" multiple accept="image/*" onChange={handleImageChange} required />
-              <p style={{ marginTop: 8, marginBottom: 0 }}>
-                {images.length > 0 ? `${images.length} imágenes seleccionadas` : "Toca para agregar fotos"}
-              </p>
+
+              {images.length === 0 ? (
+                <p style={{ marginTop: 8, marginBottom: 0 }}>Toca para agregar fotos</p>
+              ) : (
+                <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '12px', flexWrap: 'wrap' }}>
+                  {images.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={URL.createObjectURL(img)}
+                      alt={`preview ${idx}`}
+                      style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '8px', border: '2px solid var(--accent-orange)' }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
